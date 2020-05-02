@@ -1,6 +1,6 @@
 const Koa = require("koa");
 const app = new Koa();
-const router = require("./api/test");
+const router = require("./API/test");
 
 app.use(async (ctx, next) => {
   const start = Date.now();

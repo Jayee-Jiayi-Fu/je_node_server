@@ -1,16 +1,23 @@
 {
   "name": "je_node_server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A manage system built with vue ssr",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node server",
+    "start": "cross-env NODE_ENV=production node server",
+    "build": "rimraf dist && npm run build:server && npm run build:client",
+    "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js  --progress --hide-modules",
+    "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.client.config.js --progress --hide-modules"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "koa",
+    "vue",
+    "node",
+    "ssr"
+  ],
+  "author": "Jayee",
   "license": "ISC",
-  "dependencies": {
-    "koa": "^2.11.0",
-    "koa-router": "^8.0.8"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

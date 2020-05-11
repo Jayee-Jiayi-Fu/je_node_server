@@ -1,18 +1,42 @@
 const path = require("path");
-const isProd = process.env.NODE_ENV === "production" ? true : false;
-const ASSETS_ROOT = path.resolve(__dirname, "../dist");
-const config = isProd ? require("./prod.config") : require("./dev.config");
+const fs = require("fs");
 
-// 组装 最终静态资源 路径
-const buildAssetsPath = function(_path) {
-  // console.log("....");
-  // throw new Error(path.join(config.ASSETS_SUB_PATH, _path));
-  return path.join(config.ASSETS_SUB_PATH, _path);
-};
+const isProd = process.env.NODE_ENV === "production" ? true : false;
+const isDev = process.env.NODE_ENV !== "production" ? true : false;
+const DEV_CONFIG = require("./dev.config");
+const PROD_CONFIG = require("./prod.config");
+const CUR_CONFIG = isProd ? PROD_CONFIG : DEV_CONFIG;
 
 module.exports = {
   isProd,
-  ASSETS_ROOT,
-  ...config,
-  buildAssetsPath,
+
+  isDev,
+
+  DEV_CONFIG,
+
+  PROD_CONFIG,
+
+  CUR_CONFIG,
+
+  PORT: CUR_CONFIG.PORT,
+
+  //  TEMPLATE_PATH : path.resolve(__dirname, "../src/template"),
+
+  ASSETS_ROOT: path.resolve(__dirname, "../dist"),
+
+  ASSET_PUBLIC_PATH: CUR_CONFIG.ASSETS_PUBLIC_PATH,
+
+  ASSETS_SUB_PATH: CUR_CONFIG.ASSETS_SUB_PATH,
+
+  NODE_ENV: isProd ? "production" : "development",
+
+  CLIENT_VUE_ENV: "client",
+
+  SERVER_VUE_ENV: "server",
+
+  PROXY: CUR_CONFIG.PROXY,
+
+  assetsPath(_path) {
+    return path.join(CUR_CONFIG.ASSETS_SUB_PATH, _path);
+  },
 };
